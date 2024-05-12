@@ -96,7 +96,6 @@ const Profile = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-            
         </section>
     )
 }
