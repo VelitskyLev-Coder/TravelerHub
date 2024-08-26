@@ -1,5 +1,5 @@
-import {React, useEffect} from 'react';
-import { useState } from 'react';
+import {React, useEffect} from 'react'
+import { useState } from 'react'
 import { Accordion, Spinner } from 'react-bootstrap'
 
 // components
@@ -80,7 +80,7 @@ const ManageTrips = () => {
             const removedAdventureCanvas = prevUnpublished.find(adventureCanvas => adventureCanvas._id === id)
             const updatedUnpublished = prevUnpublished.filter(adventureCanvas => adventureCanvas._id !== id)
             setUnconfirmed((prevUnconfirmed) => [...prevUnconfirmed, removedAdventureCanvas])
-            return updatedUnpublished;
+            return updatedUnpublished
         })
     }
     

@@ -1,20 +1,20 @@
 import { Card, Button, Carousel } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { useState } from 'react';
+import { useState } from 'react'
 
 // components
-import Forum from './Forum';
+import Forum from './Forum'
 
 // hooks
 import { useCurrAdventureCanvaseContext } from '../hooks/useCurrAdventureCanvaseContext'
 
 const AdventureCanvase = ({ adventureCanvase }) => {
 
-    const [forumShow, setForumShow] = useState(false);
+    const [forumShow, setForumShow] = useState(false)
     const {dispatch} = useCurrAdventureCanvaseContext()
 
     const setAdventureCanvase = () => {
-        localStorage.setItem('currAdventureCanvases', JSON.stringify(adventureCanvase)); // Save to local storage
+        localStorage.setItem('currAdventureCanvases', JSON.stringify(adventureCanvase)) // Save to local storage
         dispatch({type: 'SET_CURRENT_ADVENTURE_CANVASES', payload: adventureCanvase})
     }
 

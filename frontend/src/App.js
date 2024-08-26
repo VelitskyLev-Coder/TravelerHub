@@ -1,7 +1,5 @@
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 import { useAuthContext } from './hooks/useAuthContext'
-// import React from 'react';
 
 // pages & components
 import Navbar from './components/Navbar'

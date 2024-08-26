@@ -1,6 +1,6 @@
 import { Accordion, Col, Row, Modal, Spinner } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom'
 
 // components
 import ScheduledItem from '../components/ScheduledItem'
@@ -19,7 +19,7 @@ const CreateTrip = () => {
   const {dates, scheduled, dispatch} = useTripPlanContext()
   const {currAdventureCanvases} = useCurrAdventureCanvaseContext()
 
-  const location = useLocation();
+  const location = useLocation()
 
   const [error, setError] = useState(null)
   const [success, setSuccessMsg] = useState(null)
@@ -148,7 +148,7 @@ const CreateTrip = () => {
     formData.append('adventureCanvas', JSON.stringify(adventureCanvas))
     formData.append('tripPlan', JSON.stringify(tripPlan))
 
-    setIsLoading(true);
+    setIsLoading(true)
 
     const response = await fetch('api/adventureCanvas/newTrip', {
       method: 'POST',
@@ -161,7 +161,7 @@ const CreateTrip = () => {
     const json = await response.json()
 
     if (response.ok) {
-      setIsLoading(false);
+      setIsLoading(false)
       setError(null)
       setSuccessMsg(json.msg)
 
@@ -179,7 +179,7 @@ const CreateTrip = () => {
       setShowErrorMsg(true)
     } 
     if (!response.ok) {
-      setIsLoading(false);
+      setIsLoading(false)
       setError(json.error)
       setSuccessMsg(null)
       setShowErrorMsg(true)

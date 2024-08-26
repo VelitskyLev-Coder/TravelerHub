@@ -1,9 +1,9 @@
-import React from 'react';
-import { Form, FloatingLabel } from 'react-bootstrap';
-import { useState } from 'react';
+import React from 'react'
+import { Form, FloatingLabel } from 'react-bootstrap'
+import { useState } from 'react'
 
 import { useLogin } from '../hooks/useLogin'
-import ErrorMsg from "../components/ErrorMsg";
+import ErrorMsg from "../components/ErrorMsg"
 
 const Login = () => {
     
@@ -13,7 +13,7 @@ const Login = () => {
     const {login, error, isLoading} = useLogin()
 
     const handleLoginBtn = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         await login(email, password)
     }
     

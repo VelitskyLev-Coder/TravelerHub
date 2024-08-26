@@ -1,17 +1,15 @@
-import React from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
+import React from 'react'
+import { Navbar, Nav, Container } from 'react-bootstrap'
+import { NavLink } from 'react-router-dom'
 
 import { useLogout } from '../hooks/useLogout'
-import { useAuthContext } from '../hooks/useAuthContext';
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const ADMIN_ROLE = 'admin'
 const TOUR_OPERATOR_ROLE = 'tourOperator'
 const TRAVELER_ROLE = 'traveler'
 
 const NavbarUser = () => {
-    // const user = JSON.parse(localStorage.getItem('user'));
-
     const { logout } = useLogout()
     const { user } = useAuthContext()
 
@@ -20,7 +18,7 @@ const NavbarUser = () => {
     }
 
     return (
-        <Navbar data-bs-theme="dark" expand="lg" className="custom-navbar sticky-top">
+        <Navbar collapseOnSelect data-bs-theme="dark" expand="lg" className="custom-navbar sticky-top">
             <Container className="container" fluid>
             <Navbar.Brand href="/homeuser" className='nav-title'>Traveler's Hub</Navbar.Brand>
             <div></div>
@@ -36,7 +34,6 @@ const NavbarUser = () => {
                             <Nav.Link as={NavLink} to="/createTrip">Create a Trip</Nav.Link> 
                         </>
                     }
-                    {/* <Nav.Link as={NavLink} to="/createTrip">Create a Trip</Nav.Link> */}
                     { user && user.userType!==ADMIN_ROLE && <Nav.Link as={NavLink} to="/Concept">Concept</Nav.Link> }
                     { user && user.userType===ADMIN_ROLE && 
                         <>

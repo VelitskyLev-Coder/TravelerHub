@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Spinner } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap'
 
 // components
 import MyTripAdventureCanvase from '../components/MyTripAdventureCanvase'
