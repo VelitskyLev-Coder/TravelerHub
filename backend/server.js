@@ -18,7 +18,7 @@ const reviewRoutes = require('./routes/review')
 const app = express()
 
 // Serve static files from the 'public' directory
-app.use(express.static('public'));
+app.use(express.static('public'))
 
 // middleware
 app.use(express.json())

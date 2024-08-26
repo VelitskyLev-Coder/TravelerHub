@@ -31,7 +31,7 @@ const commentSchema = new Schema({
         type: [String],
         required: true,
     },
-}, { timestamps: true });
+}, { timestamps: true })
 
 const forumSchema = new Schema({
     comments: [commentSchema],
