@@ -124,7 +124,7 @@ const TripPlan = () => {
 
     const isValidExpirationDate = (date) => {
         const regex = /^(0[1-9]|1[0-2])\/\d{2}$/; // Matches MM/YY format
-        return regex.test(date);
+        return regex.test(date)
     }
 
     const saveBooking = async () => {
@@ -341,8 +341,9 @@ const TripPlan = () => {
             </table>
 
             <label className='tripPlan-large-label tripPlan-sub-title'>Travel Guide</label>
-            <div className='tripPlan-info-p-and-travelGuide-div'> {tripPlan && tripPlan.travelGuide}</div> 
-
+            <div className='tripPlan-info-p-and-travelGuide-div'> 
+                {tripPlan && tripPlan.travelGuide!=='' ? tripPlan.travelGuide : 'No Travel Guide has been added for this trip.'}
+            </div> 
 
             {/* pop-up modal for payment */}
             <Modal className='tripPlan-modal-payment' size='lg' show={showPayment} onHide={handleClosePayment} animation={false} centered>

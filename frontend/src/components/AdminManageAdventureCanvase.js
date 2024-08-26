@@ -27,15 +27,15 @@ const AdminManageAdventureCanvase = ({ adventureCanvase, removeAdventureCanvase,
 
     const [showMsg, setShowMsg] = useState(false)
     const handleCloseMsg = () => {
-        setShowMsg(false);
+        setShowMsg(false)
         if (removeAfterClose) {
             setRemoveAfterClose(false)
-            removeAdventureCanvase(adventureCanvase._id);
+            removeAdventureCanvase(adventureCanvase._id)
         }
     }
     
     const setAdminManageAdventureCanvase = () => {
-        localStorage.setItem('currAdventureCanvases', JSON.stringify(adventureCanvase)); // Save to local storage
+        localStorage.setItem('currAdventureCanvases', JSON.stringify(adventureCanvase)) // Save to local storage
         dispatch({type: 'SET_CURRENT_ADVENTURE_CANVASES', payload: adventureCanvase})
     }
 
@@ -127,28 +127,30 @@ const AdminManageAdventureCanvase = ({ adventureCanvase, removeAdventureCanvase,
 
     return(
         <section className='adventureCanvase-section'>
-            <Card className='adminManageAAdventureCanvase-card'>
+            <Card className='adminManageAdventureCanvase-card'>
                 <Card.Body>
-                    <Card.Title>{adventureCanvase.tripName} | {adventureCanvase.duration} Day/s | Cost: {adventureCanvase.cost}$</Card.Title>
-                    <Card.Text className='scroll-custom-adminManageAAdventureCanvase'>{adventureCanvase.description}</Card.Text>
+                    <Card.Title>{adventureCanvase.tripName} | <Link onClick={setAdminManageAdventureCanvase} to="/tripPlan">Read More</Link></Card.Title>
+                    <Card.Text className='scroll-custom-adminManageAdventureCanvase'>{adventureCanvase.description}</Card.Text>
                 </Card.Body>
-                <Card.Footer className="d-flex justify-content-between">
+                <Card.Footer className='adminManageAdventureCanvase-card-footer'>
                     { type==='unpublished' && 
                         <>
-                            <Button variant="primary" onClick={publishTrip}>Publish Trip</Button> 
-                            <label>Assign a tour operator for the trip:</label>
-                            <select onChange={(e) => setAssignTourOperator(tourOperators[e.target.value])}>
-                                <option value="" disabled selected>Select a tour operator</option>
-                                { tourOperators.map((tourOperator, idx) => (
-                                    <option key={idx} value={idx}>
-                                        {`${tourOperator.username} (${tourOperator.email})`}
-                                    </option>
-                                ))}
-                            </select>
+                            <div className='adminManageAdventureCanvase-unpublished-div'>
+                                <Button variant="primary" onClick={publishTrip}>Publish Trip</Button> 
+                                <label>Assign a tour operator for the trip:</label>
+                                <select onChange={(e) => setAssignTourOperator(tourOperators[e.target.value])}>
+                                    <option value="" disabled selected>Select a tour operator</option>
+                                    { tourOperators.map((tourOperator, idx) => (
+                                        <option key={idx} value={idx}>
+                                            {`${tourOperator.username} (${tourOperator.email})`}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
                             <Button variant="danger" onClick={deleteTrip}>Delete Trip</Button>
                         </>
                     }
-                    <Link onClick={setAdminManageAdventureCanvase} to="/tripPlan">Read More</Link>
+                    
                 </Card.Footer>
             </Card>
 

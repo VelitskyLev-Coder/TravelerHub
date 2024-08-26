@@ -1,22 +1,24 @@
-import React from 'react';
-import { Form, FloatingLabel, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import React from 'react'
+import { Form, FloatingLabel, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { useState } from 'react'
 
-import { useState } from 'react';
+// hooks
 import { useSignup } from '../hooks/useSignup'
-import ErrorMsg from "../components/ErrorMsg";
+
+// components
+import ErrorMsg from "../components/ErrorMsg"
 
 const SignUp = () => {
 
     const [email, setEmail] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [photo, setPhoto] = useState(null)
 
     const {signup, isLoading, error} = useSignup()
 
     const handleSignupBtn = async (e) => {
-        e.preventDefault();
-        await signup(email, username, password, photo, 'traveler')
+        e.preventDefault()
+        await signup(email, username, password, 'traveler')
     }
 
     const renderTooltip = (props) => (
@@ -56,15 +58,6 @@ const SignUp = () => {
                             placeholder="Password" 
                         />
                     </FloatingLabel>
-
-                    <Form.Group controlId="formFile" className="mt-2">
-                        <Form.Label>Upload Photo (optional)</Form.Label>
-                        <Form.Control 
-                            type="file" 
-                            onChange={(e) => setPhoto(e.target.value)}
-                            value={photo}
-                        />
-                    </Form.Group>
 
                     <button disabled={isLoading} className='login-btn-home' onClick={handleSignupBtn}>Sign Up</button>
                 </form>

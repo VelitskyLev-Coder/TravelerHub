@@ -1,6 +1,6 @@
 import { Button, Modal } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { useState } from 'react';
+import { useState } from 'react'
 
 // components
 import Forum from './Forum'
@@ -16,7 +16,7 @@ const MyTripAdventureCanvase = ({ idx, adventureCanvas }) => {
     const { dispatch } = useCurrAdventureCanvaseContext()
 
     const [error, setError] = useState(null)
-    const [forumShow, setForumShow] = useState(false);
+    const [forumShow, setForumShow] = useState(false)
     const [reviews, setReviews] = useState([])
 
     const [showReviews, setShowReviews] = useState(false)
@@ -24,7 +24,7 @@ const MyTripAdventureCanvase = ({ idx, adventureCanvas }) => {
     const handleShowReviews = () => setShowReviews(true)
 
     const setAdventureCanvas = () => {
-        localStorage.setItem('currAdventureCanvases', JSON.stringify(adventureCanvas)); // Save to local storage
+        localStorage.setItem('currAdventureCanvases', JSON.stringify(adventureCanvas)) // Save to local storage
         dispatch({type: 'SET_CURRENT_ADVENTURE_CANVASES', payload: adventureCanvas})
     }
 

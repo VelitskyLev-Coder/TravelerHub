@@ -1,17 +1,17 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer } from "react"
 
 export const TripPlanContext = createContext()
 
 export const tripPlanReducer = (state, action) => {
     switch (action.type) {
         case 'ADD_DATE':
-            const updatedDates = [...state.dates, action.payload].sort((a, b) => new Date(a.starting) - new Date(b.starting));
+            const updatedDates = [...state.dates, action.payload].sort((a, b) => new Date(a.starting) - new Date(b.starting))
             return {
                 ...state,
                 dates: updatedDates
             }
         case 'ADD_SCHEDULED':
-            const updatedScheduled = [...state.scheduled, action.payload].sort((a, b) => a.day - b.day);
+            const updatedScheduled = [...state.scheduled, action.payload].sort((a, b) => a.day - b.day)
             return {
                 ...state,
                 scheduled: updatedScheduled

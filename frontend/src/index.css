@@ -1,8 +1,6 @@
 /************ error msg ************/
 .error {
   padding: 8px;
-  /* background: #ffefef; */
-  /* b04848 */
   background: #e96b6b;
   color: black;  
   border: 1px solid #e96b6b;
@@ -88,9 +86,7 @@
 /************ home page ************/
 .background-home {
   background-image: url('./images/background-home.jpg');
-  /* background-size: auto; */
   background-repeat: no-repeat;
-  /* min-height: 50%; */
   height: auto;
 }
 
@@ -125,9 +121,7 @@
   background-color: #FFD460;
   border-radius: 7px;
   border: none;
-  /* padding: 1.1rem 1.6rem; */
   padding: 6px;
-  /* margin-bottom: 1%; */
   transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
@@ -149,7 +143,6 @@
   padding: 1%;
   margin-bottom: 2%;
   border-radius: 8px;
-  /* box-shadow: 0 4px 8px rgba(255, 232, 58, 0.862); */
   box-shadow: 0 4px 8px rgba(70, 69, 66, 0.862);
   width: calc(45%);
   text-align: center;
@@ -211,6 +204,10 @@
   -webkit-text-stroke: 1px #FFD460;
   margin-bottom: 4%;
 }
+
+.login-container a {
+  color: #755808;
+}
 /************************************/
 
 
@@ -236,7 +233,6 @@
 
 .background button {
   border-color: #FFD460;
-  /* background-color: #FFD460; */
 }
 
 .background button:hover {
@@ -297,22 +293,31 @@
   max-height: 100px;
   overflow-y: auto;
 }
-/* .adventureCanvase-section .adventureCanvase-card { !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  height: 450px;
-} */
 /************************************/
 
 
-/************ adminManageAAdventureCanvase component ************/
-.adventureCanvase-section .adminManageAAdventureCanvase-card {
+/************ adminManageAdventureCanvase component ************/
+.adventureCanvase-section .adminManageAdventureCanvase-card {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   height: 190px;
   margin-bottom: 2%;
 }
 
-.scroll-custom-adminManageAAdventureCanvase {
+.scroll-custom-adminManageAdventureCanvase {
   max-height: 65px;
   overflow-y: auto;
+}
+
+.adminManageAdventureCanvase-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.adminManageAdventureCanvase-unpublished-div {
+  display: flex;
+  flex-grow: 1;
+  gap: 2%;
 }
 /************************************/
 
@@ -323,7 +328,6 @@
 }
 
 .createATrip textarea, .createATrip input {
-  /* width: 50%; */
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -452,7 +456,6 @@
   width: 17px;
   height: 17px;
   margin-right: 10px;
-  /* object-fit: cover; */
 }
 
 .ForumChat-title .username-label {
@@ -755,9 +758,6 @@
   border-radius: 7px;
 
 }
-/* .tripPlan-scheduledItem-accordion .accordion-button:not(.collapsed) {
-  background-color: #fbedc8;
-} */
 /************************************/
 
 
@@ -765,7 +765,6 @@
 .profile-container {
   display: grid;
   grid-template-columns: repeat(3, minmax(50px, 1fr));
-  /* grid-template-rows: repeat(4, minmax(100px, 100px)); */
   grid-template-rows: 100px 125px 125px auto;
 }
 
@@ -878,15 +877,6 @@
   display: flex;
   justify-content: space-between;
 }
-/* .mybooking-container label {
-  margin-top: 3%;
-  font-weight: bold;
-  text-decoration: overline black;
-} */
-
-/* .mybooking-container div div {
-  margin-top: 2%;
-} */
 /************************************/
 
 
@@ -967,6 +957,27 @@
   margin-bottom: 10px;
   display: flex;
   justify-content: start;
+}
+/************************************/
+
+
+/************ manage user page ************/
+.manage-user-create-account-btn {
+  background-color: #FFD460;
+  border-radius: 7px;
+  border: none;
+  padding: 6px;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.manage-user-create-account-btn:hover,
+.manage-user-create-account-btn:focus {
+  background-color: white;
+}
+
+.login-container .manage-user-create-account-btn {
+  width: 150px;
 }
 /************************************/
 

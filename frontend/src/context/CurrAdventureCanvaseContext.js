@@ -1,4 +1,4 @@
-import { createContext, useReducer, useEffect } from "react";
+import { createContext, useReducer, useEffect } from "react"
 
 export const CurrAdventureCanvaseContext = createContext()
 
@@ -7,6 +7,10 @@ export const currAdventureCanvaseReducer = (state, action) => {
         case 'SET_CURRENT_ADVENTURE_CANVASES':
             return {
                 currAdventureCanvases: action.payload
+            }
+        case 'RESET_ALL':
+            return {
+                currAdventureCanvases: null
             }
         default:
             return state
@@ -19,11 +23,11 @@ export const CurrAdventureCanvaseContextProvider = ({ children }) => {
     })
 
     useEffect(() => {
-        const storedAdventureCanvases = JSON.parse(localStorage.getItem('currAdventureCanvases'));
+        const storedAdventureCanvases = JSON.parse(localStorage.getItem('currAdventureCanvases'))
         if (storedAdventureCanvases) {
-            dispatch({ type: 'SET_CURRENT_ADVENTURE_CANVASES', payload: storedAdventureCanvases });
+            dispatch({ type: 'SET_CURRENT_ADVENTURE_CANVASES', payload: storedAdventureCanvases })
         }
-    }, []);
+    }, [])
 
     return (
         <CurrAdventureCanvaseContext.Provider value={{...state, dispatch}}>

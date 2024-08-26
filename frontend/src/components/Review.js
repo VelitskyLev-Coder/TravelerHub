@@ -6,15 +6,15 @@ import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 const Review = ({ review }) => {
 
     const renderStars = () => {
-        const stars = [];
+        const stars = []
         for (let i = 1; i <= 5; i++) {
             if (i <= review.rating) {
-                stars.push(<span key={i} className="star filled">★</span>);
+                stars.push(<span key={i} className="star filled">★</span>)
             } else {
-                stars.push(<span key={i} className="star unfilled">☆</span>);
+                stars.push(<span key={i} className="star unfilled">☆</span>)
             }
         }
-        return stars;
+        return stars
     }
 
     return(

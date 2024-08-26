@@ -1,9 +1,9 @@
-import React from 'react';
-import { Form, FloatingLabel } from 'react-bootstrap';
-import { useState } from 'react';
+import React from 'react'
+import { Form, FloatingLabel } from 'react-bootstrap'
+import { useState } from 'react'
 
 // components
-import ErrorMsg from "../components/ErrorMsg";
+import ErrorMsg from "../components/ErrorMsg"
 import SuccessMsg from '../components/SuccessMsg'
 
 // hooks
@@ -14,13 +14,12 @@ const ManageUsers = () => {
     const [email, setEmail] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [photo, setPhoto] = useState(null)
 
     const {signup, isLoading, error, success} = useSignup()
 
     const handleSignupBtn = async (e) => {
-        e.preventDefault();
-        await signup(email, username, password, photo, 'tourOperator')
+        e.preventDefault()
+        await signup(email, username, password, 'tourOperator')
     }
 
     return (
@@ -55,16 +54,7 @@ const ManageUsers = () => {
                         />
                     </FloatingLabel>
 
-                    <Form.Group controlId="formFile" className="mt-2">
-                        <Form.Label>Upload Photo (optional)</Form.Label>
-                        <Form.Control 
-                            type="file" 
-                            onChange={(e) => setPhoto(e.target.value)}
-                            value={photo}
-                        />
-                    </Form.Group>
-
-                    <button disabled={isLoading} className='login-btn-home' onClick={handleSignupBtn}>Sign Up</button>
+                    <button disabled={isLoading} className='manage-user-create-account-btn' onClick={handleSignupBtn}>Create Account</button>
                 </form>
 
                 { error &&  <ErrorMsg msg={error}/> }

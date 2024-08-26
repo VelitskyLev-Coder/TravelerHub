@@ -1,8 +1,8 @@
-import { Accordion, Spinner } from 'react-bootstrap';
-import { useState, useEffect } from 'react';
+import { Accordion, Spinner } from 'react-bootstrap'
+import { useState, useEffect } from 'react'
 
 // components
-import UserConcept from '../components/UserConcept';
+import UserConcept from '../components/UserConcept'
 import ErrorMsg from '../components/ErrorMsg'
 import SuccessMsg from '../components/SuccessMsg'
 
@@ -98,7 +98,7 @@ const Concept = () => {
     const removeDeletedConcept = (id) => {
         setConcepts((prevConcept) => {
             const updatedConcept = prevConcept.filter(concept => concept._id !== id)
-            return updatedConcept;
+            return updatedConcept
         })
     }
 

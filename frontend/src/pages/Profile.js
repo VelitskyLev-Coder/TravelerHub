@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Modal, Button, Spinner } from "react-bootstrap"
+import { useNavigate } from 'react-router-dom'
 
 // components
 import ErrorMsg from '../components/ErrorMsg'
@@ -7,10 +8,12 @@ import SuccessMsg from '../components/SuccessMsg'
 
 // hooks
 import { useAuthContext } from '../hooks/useAuthContext'
+import { useLogout } from '../hooks/useLogout'
 
 const Profile = () => {
-
     const { user, dispatch } = useAuthContext()
+    const { logout } = useLogout()
+    const navigate = useNavigate()
 
     const [isUsernameEditable, setIsUsernameEditable] = useState(false)
     const [isPasswordEditable, setIsPasswordEditable] = useState(false)
@@ -21,6 +24,20 @@ const Profile = () => {
     const [error, setError] = useState(null)
     const [success, setSuccessMsg] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
+
+    const [approveDeleteError, setApproveDeleteError] = useState(null)
+    const [approveDeleteSuccess, setApproveDeleteSuccess] = useState(null)
+
+    const [showDeleteApproveMsg, setShowDeleteApproveMsg] = useState(false)
+    const handleCloseDeleteApproveMsg = () => {
+        if (approveDeleteSuccess) {
+            console.log('logout')
+            logout()
+            navigate('/signup')
+        }
+        setShowDeleteApproveMsg(false)
+    }
+    const handleShowDeleteApproveMsg = () => setShowDeleteApproveMsg(true)
 
     const [showDelete, setShowDelete] = useState(false)
     const handleCloseDelete = () => setShowDelete(false)
@@ -164,6 +181,30 @@ const Profile = () => {
         }
     }
 
+    const handleDeleteUserAccount = async () => {
+        const response = await fetch('api/profile/deleteUserAccount', {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${user.token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+
+        const json = await response.json()
+
+        if (!response.ok) {
+            setApproveDeleteError(json.error)
+            setApproveDeleteSuccess(null)
+        }
+
+        if (response.ok) {
+            setApproveDeleteError(null)
+            setApproveDeleteSuccess(json.msg)
+        }
+        handleCloseDelete()
+        handleShowDeleteApproveMsg()
+    }
+
     if (!user) {
         return null // Render nothing if user is null
     }
@@ -234,9 +275,20 @@ const Profile = () => {
                     <Button variant="secondary" onClick={handleCloseDelete}>
                         Close
                     </Button>
-                    <Button variant="danger" onClick={handleCloseDelete}>
+                    <Button variant="danger" onClick={handleDeleteUserAccount}>
                         Delete
                     </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* pop-up modal for display message after deleted account */}
+            <Modal show={showDeleteApproveMsg} onHide={handleCloseDeleteApproveMsg} animation={false} centered>
+                <Modal.Body className={'createATrip-Modal' && approveDeleteError ? 'errorMsg' : 'successMsg'}>
+                    { approveDeleteError && <ErrorMsg msg={approveDeleteError}/> }
+                    { approveDeleteSuccess &&  <SuccessMsg msg={approveDeleteSuccess}/> }
+                </Modal.Body>
+                <Modal.Footer className='d-flex justify-content-center'>
+                    <button onClick={handleCloseDeleteApproveMsg}>Close</button>
                 </Modal.Footer>
             </Modal>
         </section>

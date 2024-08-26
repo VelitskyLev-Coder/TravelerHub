@@ -14,7 +14,7 @@ import { useCurrAdventureCanvaseContext } from '../hooks/useCurrAdventureCanvase
 const MyBooking = () => {
     const {user} = useAuthContext()
     const {dispatch} = useCurrAdventureCanvaseContext()
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     const [error, setError] = useState(null)
     const [success, setSuccessMsg] = useState(null)
@@ -94,7 +94,7 @@ const MyBooking = () => {
         const json = await response.json()
 
         if (response.ok) {
-            localStorage.setItem('currAdventureCanvases', JSON.stringify(json)); // Save to local storage
+            localStorage.setItem('currAdventureCanvases', JSON.stringify(json)) // Save to local storage
             dispatch({type: 'SET_CURRENT_ADVENTURE_CANVASES', payload: json})
             setIsLoading(false)
             navigate('/tripPlan')
@@ -137,9 +137,9 @@ const MyBooking = () => {
     }
 
     const hasStartDatePassed = (startDate) => {
-        const currentDate = new Date();
-        const bookingDate = new Date(startDate);
-        return bookingDate < currentDate;
+        const currentDate = new Date()
+        const bookingDate = new Date(startDate)
+        return bookingDate < currentDate
     }
     
     const submitReview = async () => {
