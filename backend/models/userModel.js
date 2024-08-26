@@ -8,7 +8,6 @@ const userSchema = new Schema({
     username: {
         type: String,
         required: true,
-        // unique: true
     },
     password: {
         type: String,
@@ -31,10 +30,13 @@ const userSchema = new Schema({
 
 
 // static signup mathod
-userSchema.statics.signup = async function (email, username, password, photo, userType) {
+userSchema.statics.signup = async function (email, username, password, userType) {
 
     //validation
     if (!email || !username || !password) {
+        throw Error('All fields must be filled')
+    }
+    if (username.trim()==='' || password.trim()==='') {
         throw Error('All fields must be filled')
     }
     if (!validator.isEmail(email)) {
@@ -53,12 +55,7 @@ userSchema.statics.signup = async function (email, username, password, photo, us
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password, salt)
 
-    let user
-    if (photo == null) {
-        user = await this.create({ email, username, password: hash, userType})
-    } else {
-        user = await this.create({ email, username, password: hash, photo, userType})
-    }
+    const user = await this.create({ email, username, password: hash, userType})
 
     return user
 }

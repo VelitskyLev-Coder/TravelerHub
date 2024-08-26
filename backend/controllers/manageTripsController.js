@@ -76,28 +76,28 @@ const updateConfirmedDate = async (req, res) => {
 
     try {
         // Find the TripPlan by ID
-        const tripPlan = await TripPlan.findById({ _id: trip_id });
+        const tripPlan = await TripPlan.findById({ _id: trip_id })
         if (!tripPlan) {
-            return res.status(404).json({ error: 'TripPlan not found' });
+            return res.status(404).json({ error: 'TripPlan not found' })
         }
 
         // Find the specific date by data_id within the dates array
-        const dateItem = tripPlan.dates.id(date_id);
+        const dateItem = tripPlan.dates.id(date_id)
         if (!dateItem) {
-            return res.status(404).json({ error: 'Date not found' });
+            return res.status(404).json({ error: 'Date not found' })
         }
 
         // Toggle the executionConfirmed field
-        dateItem.executionConfirmed = !dateItem.executionConfirmed;
+        dateItem.executionConfirmed = !dateItem.executionConfirmed
 
         // Save the updated TripPlan
-        await tripPlan.save();
+        await tripPlan.save()
 
         // Respond with the updated dateItem
-        res.status(200).json(dateItem);
+        res.status(200).json(dateItem)
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
+        console.error(error)
+        res.status(500).json({ error: 'Internal server error' })
     }
 }
 

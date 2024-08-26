@@ -9,11 +9,12 @@ const {
     updateUsername,
     updatePassword,
     updatePhoto,
-    deletePhoto
+    deletePhoto,
+    deleteUserAccount
 } = require('../controllers/profileController')
 
 const requireAuth = require('../middleware/requireAuth')
-// const imgurEnsureAuthenticated = require('../middleware/imgurEnsureAuthenticated');
+// const imgurEnsureAuthenticated = require('../middleware/imgurEnsureAuthenticated')
 
 const router = express.Router()
 
@@ -21,7 +22,7 @@ const router = express.Router()
 router.use(requireAuth)
 
 // Ensure authenticated for Imgur
-// router.use(imgurEnsureAuthenticated);
+// router.use(imgurEnsureAuthenticated)
 
 // UPDATE user's username route
 router.patch('/username', updateUsername)
@@ -30,9 +31,12 @@ router.patch('/username', updateUsername)
 router.patch('/password', updatePassword)
 
 // UPDATE user's profile image route
-router.patch('/uploadPhoto', upload.single('image'), updatePhoto);
+router.patch('/uploadPhoto', upload.single('image'), updatePhoto)
 
 // DELETE user's profile image route
 router.patch('/deletePhoto', deletePhoto)
+
+// DELETE user's account route
+router.delete('/deleteUserAccount', deleteUserAccount)
 
 module.exports = router

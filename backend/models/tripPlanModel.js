@@ -23,7 +23,7 @@ const dateSchema = new Schema({
         type: Boolean,
         default: false
     }
-}, { timestamps: true });
+}, { timestamps: true })
 
 const scheduledItemSchema = new Schema({
     location: {
@@ -38,7 +38,7 @@ const scheduledItemSchema = new Schema({
         type: String,
         required: true,
     },
-}, { timestamps: true });
+}, { timestamps: true })
 
 const tripPlanSchema = new Schema({
     dates: [dateSchema],

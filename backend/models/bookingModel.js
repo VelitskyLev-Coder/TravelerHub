@@ -23,7 +23,7 @@ const paymentSchema = new Schema({
         type: Number,
         required: true,
     },
-}, { timestamps: true });
+}, { timestamps: true })
 
 const bookingSchema = new Schema({
     tripName: {

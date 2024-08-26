@@ -23,16 +23,16 @@ const loginUser = async (req, res) => {
 
 // signup user
 const signupUser = async (req, res) => {
-    const {email, username, password, photo, userType} = req.body
-
+    const {email, username, password, userType} = req.body
+    
     try {
-        const user = await User.signup(email, username, password, photo, userType)
+        const user = await User.signup(email, username, password, userType)
 
         // create a token
         const token = createToken(user._id)
 
         if (userType == 'traveler') {
-            res.status(200).json({email, token, username: user.username, photo, userType})
+            res.status(200).json({email, token, username: user.username, photo: user.photo, userType})
         } else {
             res.status(200).json('Tour Operator Account Made Successfully')
         }

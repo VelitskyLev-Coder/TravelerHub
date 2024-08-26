@@ -2,8 +2,8 @@ const AdventureCanvas = require('../models/adventureCanvasModel')
 const TripPlan = require('../models/tripPlanModel')
 const Forum = require('../models/forumModel')
 
-const fetch = require('node-fetch'); // Ensure you have node-fetch installed
-const FormData = require('form-data');
+const fetch = require('node-fetch') // Ensure you have node-fetch installed
+const FormData = require('form-data')
 
 // get all the adventure canvases
 const getadventureCanvas = async (req, res) => {
@@ -13,16 +13,16 @@ const getadventureCanvas = async (req, res) => {
 
 // create new trip
 const createNewTrip = async (req, res) => {
-    const adventureCanvas = JSON.parse(req.body.adventureCanvas);
-    const tripPlan = JSON.parse(req.body.tripPlan);
+    const adventureCanvas = JSON.parse(req.body.adventureCanvas)
+    const tripPlan = JSON.parse(req.body.tripPlan)
     
     try {
-        const imgurImageUrls = [];
+        const imgurImageUrls = []
 
         // Upload each image to Imgur
         for (const file of req.files) {
-            const formData = new FormData();
-            formData.append('image', file.buffer, file.originalname);
+            const formData = new FormData()
+            formData.append('image', file.buffer, file.originalname)
 
             const response = await fetch('https://api.imgur.com/3/image', {
                 method: 'POST',
@@ -31,13 +31,13 @@ const createNewTrip = async (req, res) => {
                     'Authorization': `Bearer ${process.env.IMGUR_ACCESS_TOKEN}`,
                     ...formData.getHeaders()
                 }
-            });
+            })
 
-            const json = await response.json();
+            const json = await response.json()
             if (response.ok) {
-                imgurImageUrls.push(json.data.link); // Store Imgur URL
+                imgurImageUrls.push(json.data.link) // Store Imgur URL
             } else {
-                throw new Error(json.data.error);
+                throw new Error(json.data.error)
             }
         }
 
@@ -45,16 +45,16 @@ const createNewTrip = async (req, res) => {
         const newAdventureCanvas = await AdventureCanvas.create({
             ...adventureCanvas,
             images: imgurImageUrls
-        });
+        })
 
-        const newTripPlan = await TripPlan.create({ ...tripPlan, adventureCanvas_id: newAdventureCanvas._id });
+        const newTripPlan = await TripPlan.create({ ...tripPlan, adventureCanvas_id: newAdventureCanvas._id })
 
         // Create forum and attach it to the new adventure canvas
-        const newForum = await Forum.create({ comments: [], adventureCanvas_id: newAdventureCanvas._id });
+        const newForum = await Forum.create({ comments: [], adventureCanvas_id: newAdventureCanvas._id })
 
-        res.status(200).json({ msg: 'The trip has been created successfully' });
+        res.status(200).json({ msg: 'The trip has been created successfully' })
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(400).json({ error: error.message })
     }
 }
  
