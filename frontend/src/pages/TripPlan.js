@@ -95,10 +95,10 @@ const TripPlan = () => {
     // eslint-disable-next-line
     }, [members])
     
-    useEffect(() => {         
+    useEffect(() => {  
         const fetchTripPlan = async () => {
             setIsLoading(true)
-
+            console.log(currAdventureCanvases)
             const response = await fetch(`/api/adventureCanvas/getTripPlanByAdventureCanvasId/${currAdventureCanvases._id}`, {
                 method: 'GET',
                 headers: {
@@ -339,6 +339,12 @@ const TripPlan = () => {
                     ))}
                 </tbody>
             </table>
+
+            <label className='tripPlan-large-label tripPlan-sub-title'>Tour Operator</label>
+            <div className='tripPlan-tourOperator'>
+                <img src={currAdventureCanvases.assignTourOperator.photo} alt=''/>
+                {currAdventureCanvases.assignTourOperator.username}
+            </div>
 
             <label className='tripPlan-large-label tripPlan-sub-title'>Travel Guide</label>
             <div className='tripPlan-info-p-and-travelGuide-div'> 

@@ -7,6 +7,7 @@ const Home = () => {
     return (
         <section className='background-home'>
             <div className='home-container'>
+                <img src='/favicon.png' alt=''/>
                 <h3 className='headline-home'>Discover your next adventure with us!</h3>
                 <h3 className='subheadline-home'>Explore the world with ease through our curated trips.</h3>
 

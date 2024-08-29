@@ -80,6 +80,12 @@
 .navbar-nav .nav-link.active {
   border-bottom: 2px solid white;
 }
+
+.navbar-logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 8px;
+}
 /************************************/
 
 
@@ -97,6 +103,15 @@
   align-items: center;
 }
 
+.home-container img {
+  width: 200px;
+  height: 200px;
+  top: 0;
+  left: 0;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
 .home-container h3 {
   font-weight: bold;
 }
@@ -105,7 +120,6 @@
   text-align: center;
   color: #FFD460;
   text-decoration: overline #FFD460;
-  padding-top: 10%;
   font-size: 280%;
   -webkit-text-stroke: 1px white;
 }
@@ -113,7 +127,7 @@
 .subheadline-home {
   text-align: center;
   color: white;
-  padding-bottom: 8%;
+  padding-bottom: 3%;
   font-size: 150%;
 }
 
@@ -453,8 +467,8 @@
 
 .ForumChat-title img {
   border-radius: 50%;
-  width: 17px;
-  height: 17px;
+  width: 35px;
+  height: 35px;
   margin-right: 10px;
 }
 
@@ -563,10 +577,28 @@
 /************ userconcept component ************/
 .userConcept-section .concept-card {
   display: flex;
-  width: 290px;
+  width: 390px;
   height: 330px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   margin-bottom: 6%;
+}
+
+@media (max-width: 440px) {
+  .userConcept-section .concept-card {
+    width: 290px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1284px) {
+  .userConcept-section .concept-card {
+    width: 330px;
+  }
+}
+
+@media (min-width: 1285px) {
+  .userConcept-section .concept-card {
+    width: 390px;
+  }
 }
 
 .userConcept-info-scroll-custom {
@@ -680,6 +712,23 @@
   margin-bottom: 1%;
   margin-top: 3%;
   text-decoration: overline #fbedc8;
+}
+
+.tripPlan-tourOperator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: large;
+  font-weight: 700;
+}
+
+.tripPlan-tourOperator img {
+  border-radius: 50px;
+  border: 1px solid black;
+  box-shadow: 0 4px 8px rgba(70, 69, 66, 0.862);
+  width: 90px;
+  height: 90px;
+  margin-right: 10px;
 }
 
 .tripPlan-scheduledItem-accordion {

@@ -75,7 +75,6 @@ const Profile = () => {
                 body: formData,
                 headers: {
                     'Authorization': `Bearer ${user.token}`,
-                    // 'Content-Type': 'application/json'
                 }
             })
     
