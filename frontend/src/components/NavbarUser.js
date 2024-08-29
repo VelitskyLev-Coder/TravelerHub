@@ -20,7 +20,10 @@ const NavbarUser = () => {
     return (
         <Navbar collapseOnSelect data-bs-theme="dark" expand="lg" className="custom-navbar sticky-top">
             <Container className="container" fluid>
-            <Navbar.Brand href="/homeuser" className='nav-title'>Traveler's Hub</Navbar.Brand>
+            <Navbar.Brand href="/homeuser" className='nav-title'>
+                <img className='navbar-logo' src='/favicon.png' alt=''/> 
+                Traveler's Hub
+            </Navbar.Brand>
             <div></div>
             <Navbar.Toggle />
             <Navbar.Collapse>

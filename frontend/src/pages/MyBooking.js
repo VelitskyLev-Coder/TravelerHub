@@ -200,7 +200,7 @@ const MyBooking = () => {
                         {bookings.map((bookTrip, idx) => (
                             <tr key={idx}>
                                 <td>{bookTrip.tripName}</td>
-                                <td>{bookTrip.duration}</td>
+                                <td>{bookTrip.duration} days</td>
                                 <td>{bookTrip.startDate}</td>
                                 <td>{bookTrip.endDate}</td>
                                 <td>{bookTrip.member}</td>
