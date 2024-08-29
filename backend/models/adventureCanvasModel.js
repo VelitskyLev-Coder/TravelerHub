@@ -2,21 +2,6 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const assignTourOperatorSchema = new Schema({
-    username: {
-        type: String,
-        required: true,
-    },
-    email: {
-        type: String,
-        required: true,
-    },
-    photo: {
-        type: String,
-        default: '/images/user-blank-profile.png',
-    },
-}, { timestamps: true })
-
 const adventureCanvasSchema = new Schema({
     images: {
         type: [String],
@@ -43,7 +28,7 @@ const adventureCanvasSchema = new Schema({
         default: false
     },
     assignTourOperator: {
-        type: assignTourOperatorSchema,
+        type: String,
         default: null
     },
 }, { timestamps: true })

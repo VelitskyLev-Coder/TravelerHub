@@ -7,8 +7,57 @@ const FormData = require('form-data')
 
 // get all the adventure canvases
 const getadventureCanvas = async (req, res) => {
-    const adventureCanvas = await AdventureCanvas.find({isPublished: true}).sort({updatedAt: -1})
-    res.status(200).json(adventureCanvas)
+    try {
+        // const adventureCanvas = await AdventureCanvas.find({isPublished: true}).sort({updatedAt: -1})
+        const adventureCanvastry = await AdventureCanvas.aggregate([
+            // Match only published adventure canvases
+            { $match: { isPublished: true } },
+            // Perform a lookup to join the AdventureCanvas collection with the User collection
+            {
+                $lookup: {
+                    from: 'users', // Name of the User collection
+                    localField: 'assignTourOperator', // Field from AdventureCanvas to match with User
+                    foreignField: 'email', // Field from User to match with AdventureCanvas
+                    as: 'tourOperatorDetails' // Name of the array field where the matched user documents will be stored
+                }
+            },
+            // Unwind the tourOperatorDetails array to convert it from an array to a single object
+            {
+                $unwind: {
+                    path: '$tourOperatorDetails',
+                    preserveNullAndEmptyArrays: true // This ensures that canvases without an assigned operator are still included
+                }
+            },
+            // Project the fields and structure the assignTourOperator as an array
+            {
+                $project: {
+                    images: 1,
+                    tripName: 1,
+                    duration: 1,
+                    description: 1,
+                    cost: 1,
+                    isPublished: 1,
+                    assignTourOperator: {
+                        $cond: {
+                            if: { $ifNull: ['$tourOperatorDetails', false] }, // Check if tourOperatorDetails exists
+                            then: {
+                                username: '$tourOperatorDetails.username',
+                                email: '$tourOperatorDetails.email',
+                                photo: '$tourOperatorDetails.photo'
+                            },
+                            else: null
+                        }
+                    },
+                    updatedAt: 1,
+                    createdAt: 1
+                }
+            }
+        ]).sort({ updatedAt: -1 })
+
+        res.status(200).json(adventureCanvastry)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
 }
 
 // create new trip

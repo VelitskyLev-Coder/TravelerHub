@@ -1,4 +1,5 @@
 const User = require('../models/userModel')
+const Booking = require('../models/bookingModel')
 
 const bcrypt = require('bcrypt')
 const FormData = require('form-data')
@@ -104,11 +105,15 @@ const deleteUserAccount = async (req, res) => {
             return res.status(404).json({ error: 'User not found' })
         }
 
+        // Delete all bookings associated with this user
+        await Booking.deleteMany({ user_id: user_id })
+        
         res.status(200).json({ msg: 'User account deleted successfully'})
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' })
     }
 }
+
 module.exports = {
     updateUsername,
     updatePassword,
