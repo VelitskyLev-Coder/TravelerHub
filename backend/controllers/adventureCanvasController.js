@@ -1,60 +1,54 @@
 const AdventureCanvas = require('../models/adventureCanvasModel')
 const TripPlan = require('../models/tripPlanModel')
 const Forum = require('../models/forumModel')
+const User = require('../models/userModel')
 
 const fetch = require('node-fetch') // Ensure you have node-fetch installed
 const FormData = require('form-data')
 
+// add tour operator details to each adventure canvas
+const addTourOperatorDetails = async (adventureCanvases) => {
+    return await Promise.all(adventureCanvases.map(async canvas => {
+        if (!canvas.assignTourOperator) {
+            return canvas
+        }
+
+        const user = await User.findOne({ email: canvas.assignTourOperator });
+        if (!user) {
+            // Fallback to default values if user is not found
+            return {
+                ...canvas.toObject(),
+                assignTourOperator: {
+                    username: 'Unknown',
+                    email: canvas.assignTourOperator.email,
+                    photo: '/images/user-blank-profile.png'
+                }
+            }
+        }
+
+        return {
+            ...canvas.toObject(),
+            assignTourOperator: {
+                username: user.username,
+                email: user.email,
+                photo: user.photo
+            }
+        }
+    }))
+}
+
 // get all the adventure canvases
 const getadventureCanvas = async (req, res) => {
     try {
-        // const adventureCanvas = await AdventureCanvas.find({isPublished: true}).sort({updatedAt: -1})
-        const adventureCanvastry = await AdventureCanvas.aggregate([
-            // Match only published adventure canvases
-            { $match: { isPublished: true } },
-            // Perform a lookup to join the AdventureCanvas collection with the User collection
-            {
-                $lookup: {
-                    from: 'users', // Name of the User collection
-                    localField: 'assignTourOperator', // Field from AdventureCanvas to match with User
-                    foreignField: 'email', // Field from User to match with AdventureCanvas
-                    as: 'tourOperatorDetails' // Name of the array field where the matched user documents will be stored
-                }
-            },
-            // Unwind the tourOperatorDetails array to convert it from an array to a single object
-            {
-                $unwind: {
-                    path: '$tourOperatorDetails',
-                    preserveNullAndEmptyArrays: true // This ensures that canvases without an assigned operator are still included
-                }
-            },
-            // Project the fields and structure the assignTourOperator as an array
-            {
-                $project: {
-                    images: 1,
-                    tripName: 1,
-                    duration: 1,
-                    description: 1,
-                    cost: 1,
-                    isPublished: 1,
-                    assignTourOperator: {
-                        $cond: {
-                            if: { $ifNull: ['$tourOperatorDetails', false] }, // Check if tourOperatorDetails exists
-                            then: {
-                                username: '$tourOperatorDetails.username',
-                                email: '$tourOperatorDetails.email',
-                                photo: '$tourOperatorDetails.photo'
-                            },
-                            else: null
-                        }
-                    },
-                    updatedAt: 1,
-                    createdAt: 1
-                }
-            }
-        ]).sort({ updatedAt: -1 })
+        const adventureCanvases = await AdventureCanvas.find({ isPublished: true }).sort({ updatedAt: -1 });
 
-        res.status(200).json(adventureCanvastry)
+        if (!adventureCanvases || adventureCanvases.length === 0) {
+            return res.status(404).json({ error: 'No adventure canvases found' });
+        }
+        
+        const adventureCanvasesWithDetails = await addTourOperatorDetails(adventureCanvases);
+
+        res.status(200).json(adventureCanvasesWithDetails)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -134,8 +128,25 @@ const getAdventureCanvasById = async (req, res) => {
         if (!adventureCanvas) {
             return res.status(404).json({ error: 'Adventure canvas not found' })
         }
+
+        // Fetch the tour operator details
+        const tourOperator = await User.findOne({ email: adventureCanvas.assignTourOperator })
         
-        res.status(200).json(adventureCanvas)
+        if (!tourOperator) {
+            throw new Error('Tour operator not found')
+        }
+
+        // Format the response to include the tour operator details in the adventureCanvas objects
+        const formattedAdventureCanvas = {
+            ...adventureCanvas._doc, // include all existing adventure fields
+            assignTourOperator: {
+                email: tourOperator.email,
+                photo: tourOperator.photo,
+                username: tourOperator.username
+            }
+        }
+        
+        res.status(200).json(formattedAdventureCanvas)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -145,12 +156,30 @@ const getAdventureCanvasById = async (req, res) => {
 const getTourOperatorTrips = async (req, res) => {
     const { email } = req.params
     try {
-        const adventureCanvas = await AdventureCanvas.find({ 'assignTourOperator.email': email }).sort({updatedAt: -1})
+        const adventureCanvas = await AdventureCanvas.find({ 'assignTourOperator': email }).sort({updatedAt: -1})
 
         if (!adventureCanvas.length) {
             return res.status(404).json({ error: 'No trip has been assigned to you yet.' })
         }
-        res.status(200).json(adventureCanvas)
+
+        // Fetch the tour operator details
+        const tourOperator = await User.findOne({ email: email })
+        
+        if (!tourOperator) {
+            throw new Error('Tour operator not found')
+        }
+
+        // Format the response to include the tour operator details in the adventureCanvas objects
+        const formattedAdventures = adventureCanvas.map(adventure => ({
+            ...adventure._doc, // include all existing adventure fields
+            assignTourOperator: {
+                email: tourOperator.email,
+                photo: tourOperator.photo,
+                username: tourOperator.username
+            }
+        }))
+
+        res.status(200).json(formattedAdventures)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }

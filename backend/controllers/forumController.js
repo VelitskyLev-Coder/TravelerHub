@@ -1,31 +1,68 @@
 const Forum = require('../models/forumModel')
+const User = require('../models/userModel')
+
+// add commenter details to each comment on the forum
+const addCommenterDetails = async (comments) => {
+    if (comments.length === 0) {
+        return comments // Return empty array if no comments are present
+    }
+
+    return await Promise.all(comments.map(async comment => {
+        const user = await User.findOne({ email: comment.email })
+
+        if (!user) {
+            // If the user is not found, return the comment with default values
+            return {
+                ...comment.toObject(), // Convert Mongoose document to plain object
+                username: 'Unknown',
+                photo: '/images/user-blank-profile.png',
+                userType: 'Unknown',
+            }
+        }
+
+        // Return the comment enriched with user details
+        return {
+            ...comment.toObject(), // Convert Mongoose document to plain object
+            username: user.username,
+            photo: user.photo,
+            userType: user.userType,
+        }
+    }))
+}
 
 // get all forum content by Adventure Canvas id
 const getForumContent = async (req, res) => {
     const { adventureCanvas_id } = req.params
     try {
-        const forum = await Forum.findOne({adventureCanvas_id})
+        const forum = await Forum.findOne({ adventureCanvas_id })
 
         if (!forum) {
             return res.status(404).json({ error: 'Forum not found' })
         }
 
-        res.status(200).json(forum)
+        // Enrich comments with user details
+        const commentsWithDetails = await addCommenterDetails(forum.comments)
+
+        // Prepare the full response object
+        const forumRes = {
+            ...forum.toObject(),
+            comments: commentsWithDetails,
+        }
+
+        res.status(200).json(forumRes)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
 }
 
+// add new message to a forum
 const addMsg = async (req, res) => {
     const { id } = req.params
-    const { userType, username, email, photo, message } = req.body
+    const { email, message } = req.body
 
     try {
         const comment = {
-            userType: userType,
-            username: username,
             email: email,
-            photo: photo,
             message: message,
             likes: [],
             dislikes: []
@@ -39,15 +76,31 @@ const addMsg = async (req, res) => {
 
         const newComment = forum.comments[forum.comments.length - 1]
 
+        // Fetch the user details based on the email
+        const user = await User.findOne({ email: email })
+
+        if (!user) {
+            throw new Error('User not found')
+        }
+
+        // Enhance the new comment with user details
+        const enhancedComment = {
+            ...newComment.toObject(),
+            userType: user.userType,
+            username: user.username,
+            photo: user.photo
+        }
+
         // Emit the updated forum and message to clients connected to this forum only
-        io.to(id).emit('msg-recieve', newComment)
+        io.to(id).emit('msg-recieve', enhancedComment)
         
-        res.status(200).json(newComment)
+        res.status(200).json(enhancedComment)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
 }
 
+// update like/dislike to a comment in a forum
 const updateLikeDislike = async (req, res) => {
     const { forumId, commentId } = req.params
     const { email, action } = req.body // action can be 'like' or 'dislike'
