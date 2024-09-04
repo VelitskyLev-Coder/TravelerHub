@@ -97,7 +97,7 @@ const Forum = (props) => {
         
         const response = await fetch(`/api/forum/addMsg/${forum._id}`, {
             method: 'PATCH',
-            body: JSON.stringify({ userType: user.userType, username: user.username, email: user.email, photo: user.photo, message }),
+            body: JSON.stringify({ email: user.email, message }),
             headers: {
                 'Authorization': `Bearer ${user.token}`,
                 'Content-Type': 'application/json'

@@ -46,8 +46,6 @@ const MyTrips = () => {
     return(
         <section className='background'>
 
-            
-            
             { isLoading && 
                 <div className='no-result-label'>
                     <Spinner animation="border" role="status"></Spinner>

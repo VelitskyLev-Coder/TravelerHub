@@ -31,7 +31,6 @@ const Profile = () => {
     const [showDeleteApproveMsg, setShowDeleteApproveMsg] = useState(false)
     const handleCloseDeleteApproveMsg = () => {
         if (approveDeleteSuccess) {
-            console.log('logout')
             logout()
             navigate('/signup')
         }
@@ -68,7 +67,6 @@ const Profile = () => {
     
         const formData = new FormData()
         formData.append('image', file)
-        console.log('formData=', formData)
         try {
             const response = await fetch('/api/profile/uploadPhoto', {
                 method: 'PATCH',

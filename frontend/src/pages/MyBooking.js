@@ -150,7 +150,7 @@ const MyBooking = () => {
 
         const response = await fetch('/api/review/addReview/', {
             method: 'POST',
-            body: JSON.stringify({ travelerName: user.username, travelerPhoto: user.photo, rating, content, adventureCanvas_id }),
+            body: JSON.stringify({ travelerEmail: user.email, rating, content, adventureCanvas_id }),
             headers: {
                 'Authorization': `Bearer ${user.token}`,
                 'Content-Type': 'application/json'
