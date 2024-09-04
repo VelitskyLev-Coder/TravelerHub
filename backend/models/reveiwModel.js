@@ -3,11 +3,15 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const reviewSchema = new Schema({
-    travelerName: {
-        type: String,
-        required: true,
-    },
-    travelerPhoto: {
+    // travelerName: {
+    //     type: String,
+    //     required: true,
+    // },
+    // travelerPhoto: {
+    //     type: String,
+    //     required: true,
+    // },
+    travelerEmail: {
         type: String,
         required: true,
     },

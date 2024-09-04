@@ -39,18 +39,6 @@ app.use('/api/forum', forumRoutes)
 app.use('/api/manageTrips', manageTripsRoutes)
 app.use('/api/review', reviewRoutes)
 
-// connect to db
-// mongoose.connect(process.env.MONGO_URI, {dbName: 'cluster0'})
-//     .then(() => {
-//         // listen to requests
-//         app.listen(process.env.PORT, () => {
-//         console.log('connecting to db & listening on port', process.env.PORT)
-//         })
-//     })
-//     .catch((error) => {
-//         console.log(error)
-//     })
-
 mongoose.connect(process.env.MONGO_URI, {dbName: 'cluster0'})
     .then(() => {
         // listen to requests
