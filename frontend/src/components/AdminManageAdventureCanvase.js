@@ -19,12 +19,8 @@ const AdminManageAdventureCanvase = ({ adventureCanvase, removeAdventureCanvase,
     const [success, setSuccessMsg] = useState(null)
     const [removeAfterClose, setRemoveAfterClose] = useState(false)
     const [tourOperators, setTourOperators] = useState([])
-    const [assignTourOperator, setAssignTourOperator] = useState({
-        username:'',
-        email:'',
-        photo:''
-    })
-
+    const [assignTourOperator, setAssignTourOperator] = useState(null)
+    
     const [showMsg, setShowMsg] = useState(false)
     const handleCloseMsg = () => {
         setShowMsg(false)
@@ -67,7 +63,7 @@ const AdminManageAdventureCanvase = ({ adventureCanvase, removeAdventureCanvase,
 
     const publishTrip = async () => {
         // Check if a tour operator is selected
-        if (!assignTourOperator.username) { 
+        if (!assignTourOperator) { 
             setError('Please select a tour operator before publishing the trip.')
             setShowMsg(true)
             return
@@ -138,10 +134,10 @@ const AdminManageAdventureCanvase = ({ adventureCanvase, removeAdventureCanvase,
                             <div className='adminManageAdventureCanvase-unpublished-div'>
                                 <Button variant="primary" onClick={publishTrip}>Publish Trip</Button> 
                                 <label>Assign a tour operator for the trip:</label>
-                                <select onChange={(e) => setAssignTourOperator(tourOperators[e.target.value])}>
+                                <select onChange={(e) => setAssignTourOperator(e.target.value)}>
                                     <option value="" disabled selected>Select a tour operator</option>
                                     { tourOperators.map((tourOperator, idx) => (
-                                        <option key={idx} value={idx}>
+                                        <option key={idx} value={tourOperator.email}>
                                             {`${tourOperator.username} (${tourOperator.email})`}
                                         </option>
                                     ))}

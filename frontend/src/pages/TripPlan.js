@@ -98,7 +98,6 @@ const TripPlan = () => {
     useEffect(() => {  
         const fetchTripPlan = async () => {
             setIsLoading(true)
-            console.log(currAdventureCanvases)
             const response = await fetch(`/api/adventureCanvas/getTripPlanByAdventureCanvasId/${currAdventureCanvases._id}`, {
                 method: 'GET',
                 headers: {
