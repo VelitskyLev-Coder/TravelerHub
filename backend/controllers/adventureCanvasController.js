@@ -138,7 +138,7 @@ const getAdventureCanvasById = async (req, res) => {
 
         // Format the response to include the tour operator details in the adventureCanvas objects
         const formattedAdventureCanvas = {
-            ...adventureCanvas._doc, // include all existing adventure fields
+            ...adventureCanvas.toObject(), // include all existing adventure fields
             assignTourOperator: {
                 email: tourOperator.email,
                 photo: tourOperator.photo,
@@ -171,7 +171,7 @@ const getTourOperatorTrips = async (req, res) => {
 
         // Format the response to include the tour operator details in the adventureCanvas objects
         const formattedAdventures = adventureCanvas.map(adventure => ({
-            ...adventure._doc, // include all existing adventure fields
+            ...adventure.toObject(), // include all existing adventure fields
             assignTourOperator: {
                 email: tourOperator.email,
                 photo: tourOperator.photo,
