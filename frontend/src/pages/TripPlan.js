@@ -340,10 +340,15 @@ const TripPlan = () => {
             </table>
 
             <label className='tripPlan-large-label tripPlan-sub-title'>Tour Operator</label>
-            <div className='tripPlan-tourOperator'>
-                <img src={currAdventureCanvases.assignTourOperator.photo} alt=''/>
-                {currAdventureCanvases.assignTourOperator.username}
-            </div>
+            {currAdventureCanvases.assignTourOperator && 
+                <div className='tripPlan-tourOperator'>
+                    <img src={currAdventureCanvases.assignTourOperator.photo} alt=''/>
+                    {currAdventureCanvases.assignTourOperator.username}
+                </div>
+            }
+            {!currAdventureCanvases.assignTourOperator && 
+                <p>Tour operator need to be assigned</p>
+            }
 
             <label className='tripPlan-large-label tripPlan-sub-title'>Travel Guide</label>
             <div className='tripPlan-info-p-and-travelGuide-div'> 

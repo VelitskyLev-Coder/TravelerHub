@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, FloatingLabel, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Form, FloatingLabel } from 'react-bootstrap'
 import { useState } from 'react'
 
 // hooks
@@ -20,12 +20,6 @@ const SignUp = () => {
         e.preventDefault()
         await signup(email, username, password, 'traveler')
     }
-
-    const renderTooltip = (props) => (
-        <Tooltip id="button-tooltip" {...props}>
-            Entering as a guest will allow you to ONLY view trips. You will not be able to book, discuss in the forum, create concepts, or access other features.
-        </Tooltip>
-    )
 
     return (
         <section className='background-login-signup'>
@@ -65,13 +59,6 @@ const SignUp = () => {
                 { error &&  <ErrorMsg msg={error}/> }
 
                 <p>Already have an account? <a href='/login'>Log In</a></p>
-
-                <p>
-                    Don't want to create an account? <a href='/homeuser'>Stay as a guest </a>
-                    <OverlayTrigger overlay={renderTooltip}>
-                        <i className="fa fa-exclamation-circle"></i>
-                    </OverlayTrigger>
-                </p>
             </div>
         </section>
     )
