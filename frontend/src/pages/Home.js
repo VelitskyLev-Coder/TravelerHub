@@ -19,8 +19,6 @@ const Home = () => {
                     
                     Enjoy all features by <button className='login-btn-home' onClick={() => navigate("/signup")}>Sign Up</button> to the website!
                     Already have account? <button className='login-btn-home' onClick={() => navigate("/login")}>Log In</button> here. <br/><br/>
-
-                    Don't want to create an account? <a href='/homeuser'>Stay as a guest </a>
                 </div>
 
                 <h4 className='feature-title'>Here's What You Can Do:</h4>

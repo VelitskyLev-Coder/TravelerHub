@@ -3,6 +3,37 @@ const TripPlan = require('../models/tripPlanModel')
 const Forum = require('../models/forumModel')
 const User = require('../models/userModel')
 
+// add tour operator details to each adventure canvas
+const addTourOperatorDetails = async (adventureCanvases) => {
+    return await Promise.all(adventureCanvases.map(async canvas => {
+        if (!canvas.assignTourOperator) {
+            return canvas
+        }
+
+        const user = await User.findOne({ email: canvas.assignTourOperator });
+        if (!user) {
+            // Fallback to default values if user is not found
+            return {
+                ...canvas.toObject(),
+                assignTourOperator: {
+                    username: 'Unknown',
+                    email: canvas.assignTourOperator.email,
+                    photo: '/images/user-blank-profile.png'
+                }
+            }
+        }
+
+        return {
+            ...canvas.toObject(),
+            assignTourOperator: {
+                username: user.username,
+                email: user.email,
+                photo: user.photo
+            }
+        }
+    }))
+}
+
 // get all the adventure canvases that are not yet published
 const getUnpublishedAdventureCanvas = async (req, res) => {
     try {
@@ -12,7 +43,9 @@ const getUnpublishedAdventureCanvas = async (req, res) => {
             return res.status(404).json({ error: 'There are no trips waiting to be published.' })
         }
         
-        res.status(200).json(adventureCanvas)
+        const adventureCanvasesWithDetails = await addTourOperatorDetails(adventureCanvas)
+
+        res.status(200).json(adventureCanvasesWithDetails)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -64,7 +97,9 @@ const getExecutionUnconfirmedTripPlan = async (req, res) => {
             return res.status(404).json({ error: 'No published unconfirmed trip plans found' })
         }
 
-        res.status(200).json(filteredAdventureCanvases)
+        const adventureCanvasesWithDetails = await addTourOperatorDetails(filteredAdventureCanvases)
+
+        res.status(200).json(adventureCanvasesWithDetails)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
